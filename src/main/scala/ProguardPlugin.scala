@@ -8,7 +8,7 @@ import proguard.{Configuration=>ProGuardConfiguration, ProGuard, ConfigurationPa
 import java.io.File
 
 object ProguardPlugin extends Plugin {
-  def proguardKeepLimitedSerializability = """
+  def keepLimitedSerializability = """
     -keepclassmembers class * implements java.io.Serializable {
         static long serialVersionUID;
         private void writeObject(java.io.ObjectOutputStream);
@@ -18,11 +18,11 @@ object ProguardPlugin extends Plugin {
     }
   """
 
-  def proguardKeepSerializability = "-keep class * implements java.io.Serializable { *; }"
+  def keepSerializability = "-keep class * implements java.io.Serializable { *; }"
 
-  def proguardKeepAllScala = "-keep class scala.** { *; }"
+  def keepAllScala = "-keep class scala.** { *; }"
 
-  def proguardKeepMain (name :String) =
+  def keepMain (name :String) =
     "-keep public class " + name + " { static void main(java.lang.String[]); }"
   
   private def rtJarPath = {
@@ -51,12 +51,12 @@ object ProguardPlugin extends Plugin {
   val proguardArgs = TaskKey[List[String]]("proguard-args")
   val proguardInJars = SettingKey[Classpath]("proguard-in-jars")
   val proguardInJarsTask = TaskKey[Classpath]("proguard-in-jars-task")
-  val proguardLibraryJars = SettingKey[Seq[File]]("proguard-library-jars")
+  val proguardLibraryJars = SettingKey[Classpath]("proguard-library-jars")
 
   def proguardInJarsTaskImpl: Initialize[Task[Classpath]] = {
-    (fullClasspath in Compile, products in Compile, proguardInJars) map {
-      (fc, ps, pij) =>
-      fc.filterNot(ps.contains) ++ pij
+    (fullClasspath in Compile, products in Compile, proguardInJars, proguardLibraryJars) map {
+      (fc, ps, pij, plj) =>
+      fc.filterNot(ps.contains).filterNot(plj.contains) ++ pij
     }
   } 
 
@@ -69,7 +69,7 @@ object ProguardPlugin extends Plugin {
       }
       val proguardOutJarsArg = "-outjars" :: Path.fromFile(mjp).escaped :: Nil
       val proguardLibJarsArg = {
-        val libPaths = plj.foldLeft(Map.empty[String, Path])((m, p) => m + (p.getName -> Path.fromFile(p))).values.iterator
+        val libPaths = plj.foldLeft(Map.empty[String, Path])((m, p) => m + (p.data.getName -> Path.fromFile(p.data))).values.iterator
         if (libPaths.hasNext) "-libraryjars" :: libPaths.map(_.escaped).mkString(File.pathSeparator) :: Nil else Nil
       }
       val args = proguardInJarsArg ::: proguardOutJarsArg ::: proguardLibJarsArg ::: pda.toList ::: po.toList
@@ -93,7 +93,7 @@ object ProguardPlugin extends Plugin {
     proguardOptions :== Nil,
     makeInJarFilter :== { (file) => "!META-INF/MANIFEST.MF" },
     proguardDefaultArgs :== Seq("-dontwarn", "-dontoptimize", "-dontobfuscate"),
-    proguardLibraryJars :== (rtJarPath :PathFinder).getFiles,
+    proguardLibraryJars :== Attributed.blankSeq((rtJarPath :PathFinder).getFiles),
     proguardInJars <<= (scalaInstance) { (si) => Seq(si.libraryJar) },
     proguardInJarsTask <<= proguardInJarsTaskImpl,
     proguardArgs <<= proguardArgsTask,
