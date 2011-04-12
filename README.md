@@ -2,7 +2,7 @@
 
 Requires [XSBT](http://github.com/harrah/xsbt/tree/0.9).
 
-Maven artifacts are created for 0.9.3 version.
+Maven artifacts are created for 0.9.4-SNAPSHOT version.
 
 ###Adding the plugin to your build
 
@@ -34,7 +34,7 @@ Inject the proguard settings into your project through `project/Build.scala`:
     
 Add proguard keep options in `build.sbt`. Main class keep example:
 
-    proguardOptions += ProguardPlugin.keepMain("Test")
+    proguardOptions += keepMain("Test")
 
 This will add a `proguard` action which will run Proguard and generate output in `target/<scala-version>/<project-name-version>.min.jar`. You may consult `min-jar-path` setting to see the actual path:
 
@@ -54,28 +54,32 @@ they are used), use the following option:
 
     proguardOptions ++= Seq(
       ...,
-      ProguardPlugin.keepAllScala
+      keepAllScala
     )
 
 If you wish to keep the `main()` entry point of a class, use:
 
     proguardOptions ++= Seq(
       ...,
-      ProguardPlugin.keepMain("somepackage.SomeClass")
+      keepMain("somepackage.SomeClass")
     )
 
 If you wish to keep everything that is `Serializable`, use:
 
     proguardOptions ++= Seq(
       ...,
-      ProguardPlugin.keepLimitedSerializability
+      keepLimitedSerializability
     )
 
 By default Proguard will be instructed to include everything except classes
 from the Java runtime. To treat additional libraries as external (i.e. to
-add them to the list of `-libraryjars` passed to Proguard), do the following:
-
-    proguardLibraryJars += new File(Path.userHome.toString + "/.ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.1.1.jar")
+add them to the list of `-libraryjars` passed to Proguard), do the following. Here comes the example how to select a module named "httpclient" from the library dependencies:
+    
+    proguardLibraryJars <<= (proguardLibraryJars, update) map {
+	    (libJars, report) =>
+	    val httpclientJars = report.select(module = moduleFilter(name = "httpclient"))
+      libJars ++ httpclientJars
+    }
 
 By default all jar files passed to Proguard (except for the one that contains
 your project's classes) are filtered using
