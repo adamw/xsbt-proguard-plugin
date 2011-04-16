@@ -11,8 +11,8 @@ To use the plugin in a project, you need to create `project/plugins/build.sbt`:
     resolvers += "Proguard plugin repo" at "http://siasia.github.com/maven2"
 
     libraryDependencies += "com.github.siasia" %% "xsbt-proguard-plugin" % "0.1"
-    
-In case if you have a snapshoted version of xsbt or want to use development version of the plugin, you need to create a `project/plugins/project/Build.scala`:
+
+In case if you have a xsbt version different from on used in Maven artifact or want to use development version of the plugin, you need to create a `project/plugins/project/Build.scala`:    
 
     import sbt._
     object PluginDef extends Build {
