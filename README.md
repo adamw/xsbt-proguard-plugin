@@ -2,7 +2,7 @@
 
 Requires [XSBT](http://github.com/harrah/xsbt/tree/0.9).
 
-Maven artifacts are created for 0.9.4-SNAPSHOT version.
+Maven artifacts are created for 0.9.4 and 0.9.5-SNAPSHOT versions.
 
 ###Adding the plugin to your build
 
@@ -10,7 +10,7 @@ To use the plugin in a project, you need to create `project/plugins/build.sbt`:
 
     resolvers += "Proguard plugin repo" at "http://siasia.github.com/maven2"
 
-    libraryDependencies += "com.github.siasia" %% "xsbt-proguard-plugin" % "0.1"
+    libraryDependencies += "com.github.siasia" %% "xsbt-proguard-plugin" % "0.9.4"//You can put snapshot version here
 
 In case if you have a xsbt version different from on used in Maven artifact or want to use development version of the plugin, you need to create a `project/plugins/project/Build.scala`:    
 
@@ -23,14 +23,9 @@ In case if you have a xsbt version different from on used in Maven artifact or w
     
 ###Injecting the Plugin into desired project
 
-Inject the proguard settings into your project through `project/Build.scala`:
+Inject the proguard settings into your project through `build.sbt`:
 
-    import sbt._
-
-    object MyBuild extends Build {
-      lazy val projects = Seq(root)
-      lazy val root = Project("root", file("."), settings = Defaults.defaultSettings ++ ProguardPlugin.proguardSettings)
-    }
+    seq(ProguardPlugin.proguardSettings :_*)
     
 Add proguard keep options in `build.sbt`. Main class keep example:
 
@@ -40,7 +35,7 @@ This will add a `proguard` action which will run Proguard and generate output in
 
     > min-jar-path
     [info] /home/siasia/projects/xsbt-proguard-test/target/scala-2.8.1.final/root_2.8.1-0.1.min.jar
-
+		
 ##Examples
 
 If you want to add some custom jar into the set of input jar files. Do so as follows:
