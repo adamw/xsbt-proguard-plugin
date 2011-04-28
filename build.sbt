@@ -1,6 +1,6 @@
 seq(ScriptedPlugin.scriptedSettings :_*)
 
-ScriptedPlugin.scriptedBufferLog := false
+scriptedBufferLog := false
 
 sbtPlugin := true
 
