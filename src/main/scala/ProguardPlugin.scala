@@ -26,9 +26,9 @@ object ProguardPlugin extends Plugin {
 		"-keep public class " + name + " { static void main(java.lang.String[]); }"
 
 	private def rtJarPath = {
-		val javaHome = System.getProperty("java.home")
-		val stdLocation = Path.fromFile(javaHome) / "lib" / "rt.jar"
-		val osXLocation = Path.fromFile(new java.io.File(javaHome).getParent()) / "Classes"/ "classes.jar"
+		val javaHome = new java.io.File(System.getProperty("java.home"))
+		val stdLocation = javaHome / "lib" / "rt.jar"
+		val osXLocation = new java.io.File(javaHome.getParent()) / "Classes"/ "classes.jar"
 		if (stdLocation.asFile.exists())
 			stdLocation
 		else if (osXLocation.asFile.exists())
@@ -39,8 +39,8 @@ object ProguardPlugin extends Plugin {
 	val proguard = TaskKey[Unit]("proguard")
 	val minJarPath = SettingKey[File]("min-jar-path")
 
-	private implicit def pathEscape(p: Path) = new {
-		def escaped: String = '"' + p.absolutePath.replaceAll("\\s", "\\ ") + '"'
+	private implicit def pathEscape(p: File) = new {
+		def escaped: String = '"' + Path.absolute(p).toString.replaceAll("\\s", "\\ ") + '"'
 	}
 
 	val proguardDefaultArgs = SettingKey[Seq[String]]("proguard-default-args")
@@ -64,12 +64,12 @@ object ProguardPlugin extends Plugin {
 		(proguardLibraryJars, proguardInJarsTask, artifactPath in (Compile, packageBin), makeInJarFilter, minJarPath, proguardDefaultArgs, proguardOptions, packageBin in Compile, streams) map {
 			(plj, pij, jp, mijf, mjp, pda, po, pb, s) =>
 				val proguardInJarsArg = {
-					val inPaths = pij.foldLeft(Map.empty[String, Path])((m, p) => m + (p.getName -> Path.fromFile(p))).values.iterator
-					"-injars" :: (List(Path.fromFile(jp).escaped).iterator ++ inPaths.map(p => p.escaped+"("+mijf(p.asFile.getName)+")")).mkString(File.pathSeparator) :: Nil
+					val inPaths = pij.foldLeft(Map.empty[String, File])((m, p) => m + (p.getName -> p)).values.iterator
+					"-injars" :: (List(jp.escaped).iterator ++ inPaths.map(p => p.escaped+"("+mijf(p.asFile.getName)+")")).mkString(File.pathSeparator) :: Nil
 				}
-			val proguardOutJarsArg = "-outjars" :: Path.fromFile(mjp).escaped :: Nil
+			val proguardOutJarsArg = "-outjars" :: mjp.escaped :: Nil
 			val proguardLibJarsArg = {
-				val libPaths = plj.foldLeft(Map.empty[String, Path])((m, p) => m + (p.getName -> Path.fromFile(p))).values.iterator
+				val libPaths = plj.foldLeft(Map.empty[String, File])((m, p) => m + (p.getName -> p)).values.iterator
 				if (libPaths.hasNext) "-libraryjars" :: libPaths.map(_.escaped).mkString(File.pathSeparator) :: Nil else Nil
 			}
 			val args = proguardInJarsArg ::: proguardOutJarsArg ::: proguardLibJarsArg ::: pda.toList ::: po.toList
@@ -89,7 +89,7 @@ object ProguardPlugin extends Plugin {
 		proguardOptions := Nil,
 		makeInJarFilter := { (file) => "!META-INF/MANIFEST.MF" },
 		proguardDefaultArgs := Seq("-dontwarn", "-dontoptimize", "-dontobfuscate"),
-		proguardLibraryJars := { (rtJarPath :PathFinder).getFiles },
+		proguardLibraryJars := { (rtJarPath :PathFinder).get },
 		proguardInJars <<= (scalaInstance) { (si) => Seq(si.libraryJar) },
 		proguardInJarsTask <<= proguardInJarsTaskImpl,
 		proguardArgs <<= proguardArgsTask,
