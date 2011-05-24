@@ -2,7 +2,7 @@
 
 Requires [XSBT](http://github.com/harrah/xsbt/tree/0.9).
 
-Maven artifacts are created for 0.9.4, 0.9.6 and 0.9.7 versions.
+Maven artifacts are created for 0.9.4, 0.9.6, 0.9.7 and 0.9.8 versions.
 
 ###Adding the plugin to your build
 
