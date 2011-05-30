@@ -1,1 +1,1 @@
-libraryDependencies <<= (libraryDependencies, appConfiguration) { (deps, app) => deps :+ "com.github.siasia" %% "xsbt-proguard-plugin" % app.provider.id.version }
+libraryDependencies <+= sbtVersion("com.github.siasia" %% "xsbt-proguard-plugin" % _)

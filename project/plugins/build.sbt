@@ -1,1 +1,1 @@
-libraryDependencies <<= (libraryDependencies, appConfiguration) { (deps, app) => deps :+ "org.scala-tools.sbt" %% "scripted-plugin" % app.provider.id.version }
+libraryDependencies <+= sbtVersion("org.scala-tools.sbt" %% "scripted-plugin" % _)

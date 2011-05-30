@@ -2,7 +2,7 @@
 
 Requires [XSBT](http://github.com/harrah/xsbt/tree/0.9).
 
-Maven artifacts are created for 0.9.4, 0.9.6, 0.9.7 and 0.9.8 versions.
+Maven artifacts are created for 0.9.4, 0.9.6, 0.9.7, 0.9.8 and 0.9.9 versions.
 
 ###Adding the plugin to your build
 
@@ -10,10 +10,7 @@ To use the plugin in a project, you need to create `project/plugins/build.sbt`:
 
     resolvers += "Proguard plugin repo" at "http://siasia.github.com/maven2"
 
-    libraryDependencies <<= (libraryDependencies, appConfiguration) { 
-      (deps, app) =>
-      deps :+ "com.github.siasia" %% "xsbt-proguard-plugin" % app.provider.id.version
-    }
+    libraryDependencies <+= sbtVersion("com.github.siasia" %% "xsbt-proguard-plugin" % _)
 		
 This adds plugin version corresponding to your sbt version into your build.
 
@@ -21,7 +18,7 @@ In case if you have a xsbt version different from one used in Maven artifacts or
 
     import sbt._
     object PluginDef extends Build {
-      lazy val projects = Seq(root)
+      override def projects = Seq(root)
       lazy val root = Project("plugins", file(".")) dependsOn(proguard)
       lazy val proguard = uri("git://github.com/siasia/xsbt-proguard-plugin.git")
     }
@@ -45,7 +42,7 @@ This will add a `proguard` action which will run Proguard and generate output in
 
 If you want to add some custom jar into the set of input jar files. Do so as follows:
 
-    proguardInJar += (Path.userHome / "lib" / "webspec" / "runtime.jar").asFile
+    proguardInJars += Path.userHome / "lib" / "webspec" / "runtime.jar"
     
 Scala Library is already there.
 
@@ -75,11 +72,7 @@ By default Proguard will be instructed to include everything except classes
 from the Java runtime. To treat additional libraries as external (i.e. to
 add them to the list of `-libraryjars` passed to Proguard), do the following. Here comes the example how to select a module named "httpclient" from the library dependencies:
     
-    proguardLibraryJars <<= (proguardLibraryJars, update) map {
-	    (libJars, report) =>
-	    val httpclientJars = report.select(module = moduleFilter(name = "httpclient"))
-      libJars ++ httpclientJars
-    }
+    proguardLibraryJars <+= update(_.select(module = moduleFilter(name = "httpclient")))
 
 By default all jar files passed to Proguard (except for the one that contains
 your project's classes) are filtered using
