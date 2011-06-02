@@ -53,10 +53,10 @@ object ProguardPlugin extends Plugin {
 	val proguardLibraryJars = TaskKey[Seq[File]]("proguard-library-jars")
 
 	def proguardInJarsTaskImpl: Initialize[Task[Seq[File]]] = {
-		(fullClasspath in Compile, products in Compile, proguardInJars, proguardLibraryJars) map {
-			(fc, ps, pij, plj) =>
+		(dependencyClasspath in Compile, proguardInJars, proguardLibraryJars) map {
+			(dc, pij, plj) =>
 				import Build.data
-			data(fc).filterNot(ps.contains).filterNot(plj.contains) ++ pij
+			data(dc).filterNot(plj.contains) ++ pij
 		}
 	} 
 
