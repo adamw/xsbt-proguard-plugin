@@ -56,7 +56,7 @@ object ProguardPlugin extends Plugin {
 		(fullClasspath in Compile, products in Compile, proguardInJars, proguardLibraryJars) map {
 			(fc, ps, pij, plj) =>
 				import Build.data
-			data(fc).filterNot(data(ps).contains).filterNot(plj.contains) ++ pij
+			data(fc).filterNot(ps.contains).filterNot(plj.contains) ++ pij
 		}
 	} 
 
