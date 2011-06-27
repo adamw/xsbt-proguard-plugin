@@ -72,7 +72,7 @@ By default Proguard will be instructed to include everything except classes
 from the Java runtime. To treat additional libraries as external (i.e. to
 add them to the list of `-libraryjars` passed to Proguard), do the following. Here comes the example how to select a module named "httpclient" from the library dependencies:
     
-    proguardLibraryJars <+= update(_.select(module = moduleFilter(name = "httpclient")))
+    proguardLibraryJars <++= (update) map (_.select(module = moduleFilter(name = "httpclient")))
 
 By default all jar files passed to Proguard (except for the one that contains
 your project's classes) are filtered using
