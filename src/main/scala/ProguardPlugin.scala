@@ -48,7 +48,7 @@ object ProguardPlugin extends Plugin {
 	val makeInJarFilter = SettingKey[String => String]("makeInJarFilter")
 
 	private val proguardArgs = TaskKey[List[String]]("proguard-args")
-	val proguardInJars = SettingKey[Seq[File]]("proguard-in-jars")
+	val proguardInJars = TaskKey[Seq[File]]("proguard-in-jars")
 	val proguardInJarsTask = TaskKey[Seq[File]]("proguard-in-jars-task")
 	val proguardLibraryJars = TaskKey[Seq[File]]("proguard-library-jars")
 
@@ -90,7 +90,7 @@ object ProguardPlugin extends Plugin {
 		makeInJarFilter := { (file) => "!META-INF/MANIFEST.MF" },
 		proguardDefaultArgs := Seq("-dontwarn", "-dontoptimize", "-dontobfuscate"),
 		proguardLibraryJars := { (rtJarPath :PathFinder).get },
-		proguardInJars <<= (scalaInstance) { (si) => Seq(si.libraryJar) },
+		proguardInJars <<= (scalaInstance) map { (si) => Seq(si.libraryJar) },
 		proguardInJarsTask <<= proguardInJarsTaskImpl,
 		proguardArgs <<= proguardArgsTask,
 		proguard <<= (packageBin in Compile, proguardArgs in Compile, baseDirectory) map { (_, args, bd) => proguardTask(args, bd) }
