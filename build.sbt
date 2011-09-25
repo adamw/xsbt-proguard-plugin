@@ -8,7 +8,7 @@ name := "xsbt-proguard-plugin"
 
 organization := "com.github.siasia"
 
-version <<= sbtVersion(v => v)
+version := "0.1"
 
 resolvers += "Siasia github repo" at "http://siasia.github.com/maven2"
 

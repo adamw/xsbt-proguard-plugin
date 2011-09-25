@@ -2,7 +2,7 @@
 
 Requires [XSBT](http://github.com/harrah/xsbt/tree/0.9).
 
-Maven artifacts are created for 0.9.4, 0.9.6, 0.9.7, 0.9.8, 0.9.9, 0.9.10, 0.10.0 and 0.10.1 versions.
+Maven artifacts are created for 0.9.4, 0.9.6, 0.9.7, 0.9.8, 0.9.9, 0.9.10, 0.10.0, 0.10.1 and 0.11.0 versions.
 
 ###Adding the plugin to your build
 
@@ -10,7 +10,7 @@ To use the plugin in a project, you need to create `project/plugins/build.sbt`:
 
     resolvers += "Proguard plugin repo" at "http://siasia.github.com/maven2"
 
-    libraryDependencies <+= sbtVersion("com.github.siasia" %% "xsbt-proguard-plugin" % _)
+    addSbtPlugin("com.github.siasia" % "xsbt-proguard-plugin" % "0.1")
 		
 This adds plugin version corresponding to your sbt version into your build.
 
