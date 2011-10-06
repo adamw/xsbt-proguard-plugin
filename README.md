@@ -1,6 +1,6 @@
 ##Usage
 
-Requires [XSBT](http://github.com/harrah/xsbt/tree/0.9).
+Requires [XSBT](http://github.com/harrah/xsbt).
 
 Maven artifacts are created for 0.11.0 version.
 
