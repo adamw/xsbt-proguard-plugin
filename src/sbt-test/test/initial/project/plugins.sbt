@@ -1,1 +1,1 @@
-addSbtPlugin("com.github.siasia" % "xsbt-proguard-plugin" % "0.1")
+libraryDependencies <+= sbtVersion(v => "com.github.siasia" %% "xsbt-proguard-plugin" % (v+"-0.1"))

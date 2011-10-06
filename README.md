@@ -6,11 +6,9 @@ Maven artifacts are created for 0.9.4, 0.9.6, 0.9.7, 0.9.8, 0.9.9, 0.9.10, 0.10.
 
 ###Adding the plugin to your build
 
-To use the plugin in a project, you need to create `project/plugins/build.sbt`:
+To use the plugin in a project, you need to create `project/plugins/build.sbt`(**since sonatype doesn't allow non standard maven layout we can't use `addSbtPlugin` here**):
 
-    resolvers += "Proguard plugin repo" at "http://siasia.github.com/maven2"
-
-    addSbtPlugin("com.github.siasia" % "xsbt-proguard-plugin" % "0.1")
+    libraryDependencies <+= sbtVersion(v => "com.github.siasia" %% "xsbt-proguard-plugin" % (v+"-0.1"))
 		
 This adds plugin version corresponding to your sbt version into your build.
 
