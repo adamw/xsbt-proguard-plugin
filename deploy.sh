@@ -14,7 +14,7 @@ function mvn-gpg {
 		if [[ $2 ]]; then
 				CLASSIFIER=-Dclassifier=$2
 		fi
-		mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=${POM} -Dfile=${TARGET}${VERSION}$1 $CLASSIFIER
+		mvn gpg:sign-and-deploy-file -Dgpg.passphrase=$passw -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=${POM} -Dfile=${TARGET}${VERSION}$1 $CLASSIFIER
 }
 
 mvn-gpg .jar
