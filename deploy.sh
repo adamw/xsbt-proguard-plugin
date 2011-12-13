@@ -3,7 +3,7 @@ if [[ ! $1 ]]; then
 		echo "Please provide artifact version"
 else
 VERSION=$1
-TARGET=target/scala-2.9.1/sbt-0.11.0/xsbt-proguard-plugin_2.9.1-0.11.0-
+TARGET=target/scala-2.9.1/sbt-0.11.2/xsbt-proguard-plugin_2.9.1-0.11.2-
 POM=${TARGET}${VERSION}.pom
 
 stty -echo 
