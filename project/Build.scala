@@ -44,16 +44,24 @@ object ProguardPlugin extends Build {
 		},
 		name := "xsbt-proguard-plugin",
 		organization := "com.github.siasia",
-		version <<= sbtVersion(_ + "-0.1.1"),
+		version <<= sbtVersion(_ + "-0.1.2-sml"),
 		libraryDependencies += "net.sf.proguard" % "proguard-base" % "4.6",
 		scalacOptions += "-deprecation",
 		publishMavenStyle := true,
-		publishTo <<= (version) {
+/*		publishTo <<= (version) {
 			version: String =>
 			val ossSonatype = "https://oss.sonatype.org/"
 			if (version.trim.endsWith("SNAPSHOT"))
 				Some("snapshots" at ossSonatype + "content/repositories/snapshots") 
 			else None
+		},*/
+		publishTo <<= (version) { 
+			version: String =>
+			val nexus = "http://tools.softwaremill.pl/nexus/content/repositories/"
+			if (version.trim.endsWith("SNAPSHOT"))
+				Some("softwaremill-public-snapshots" at nexus + "snapshots/")
+			else
+				Some("softwaremill-public-releases"  at nexus + "releases/")
 		},
 		credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
 		pomIncludeRepository := ((_) => false),
