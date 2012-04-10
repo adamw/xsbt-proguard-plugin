@@ -6,6 +6,8 @@ Maven artifacts are created for 0.11.0 version.
 
 ###Adding the plugin to your build
 
+####1. Up to SBT 0.11.1
+
 To use the plugin in a project, you need to create `project/plugins/build.sbt`(**since sonatype doesn't allow non standard maven layout we can't use `addSbtPlugin` here**):
 
     libraryDependencies <+= sbtVersion(v => "com.github.siasia" %% "xsbt-proguard-plugin" % (v+"-0.1.1"))
@@ -20,6 +22,12 @@ In case if you have a xsbt version different from one used in Maven artifacts or
       lazy val root = Project("plugins", file(".")) dependsOn(proguard)
       lazy val proguard = uri("git://github.com/siasia/xsbt-proguard-plugin.git")
     }
+    
+####2. For SBT 0.11.2 onwards
+
+Follow the instructions above, but note that the `project/plugins` folder has been deprecated in SBT 0.11.2.
+
+Therefore your plugin .sbt file should be created as `project/plugins.sbt`, or alternatively your Build.scala created as `project/project/Build.scala`. Make sure to remove your `project/plugins/` directory if you are upgrading.
     
 ###Injecting the Plugin into desired project
 
