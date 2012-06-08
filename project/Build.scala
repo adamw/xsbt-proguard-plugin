@@ -47,6 +47,8 @@ object ProguardPlugin extends Build {
 		version <<= sbtVersion(_ + "-0.1.2"),
 		libraryDependencies += "net.sf.proguard" % "proguard-base" % "4.7",
 		scalacOptions += "-deprecation",
+    scalaVersion := "2.9.2",
+    crossScalaVersions := Seq("2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.2"),
 		publishMavenStyle := true,
 		publishTo <<= (version) {
 			version: String =>
