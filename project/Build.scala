@@ -1,5 +1,4 @@
 import sbt._
-import ScriptedPlugin._
 import Keys._
 
 import scala.xml.{Elem, Node}
@@ -37,7 +36,6 @@ object ProguardPlugin extends Build {
 		xml.copy(child = xml.child ++ children)
 	}
 	def rootSettings: Seq[Setting[_]] = Seq(
-		scriptedBufferLog := false,
 		sbtPlugin := true,
 		projectID <<= (organization,moduleName,version,artifacts,crossPaths){ (org,module,version,as,crossEnabled) =>
 			ModuleID(org, module, version).cross(crossEnabled).artifacts(as : _*)
@@ -60,5 +58,5 @@ object ProguardPlugin extends Build {
 		credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
 		pomIncludeRepository := ((_) => false),
 		pomPostProcess := (pomPostProcessTask _))
-	lazy val root = Project("root", file(".")) settings(scriptedSettings ++ rootSettings :_*)
+	lazy val root = Project("root", file(".")) settings(rootSettings :_*)
 }
