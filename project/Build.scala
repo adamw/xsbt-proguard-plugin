@@ -43,7 +43,7 @@ object ProguardPlugin extends Build {
 			ModuleID(org, module, version).cross(crossEnabled).artifacts(as : _*)
 		},
 		name := "xsbt-proguard-plugin",
-		organization := "com.github.siasia",
+		organization := "com.github.aloiscochard",
 		version <<= sbtVersion(_ + "-0.1.2"),
 		libraryDependencies += "net.sf.proguard" % "proguard-base" % "4.7",
 		scalacOptions += "-deprecation",
