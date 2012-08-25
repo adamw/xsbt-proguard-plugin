@@ -1,0 +1,3 @@
+> ++ 2.9.1
+> proguard
+$ exec java -jar mainmodule/target/scala-2.9.1/mainmodule_2.9.1-0.1-SNAPSHOT.min.jar
