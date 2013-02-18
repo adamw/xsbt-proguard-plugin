@@ -43,6 +43,7 @@ object ProguardPlugin extends Build {
 	}
 	def rootSettings: Seq[Setting[_]] = Seq(
 		scriptedBufferLog := false,
+    scriptedLaunchOpts += "-XX:MaxPermSize=128m",
 		sbtPlugin := true,
 		projectID <<= (organization,moduleName,version,artifacts,crossPaths){ (org,module,version,as,crossEnabled) =>
 			ModuleID(org, module, version).cross(crossEnabled).artifacts(as : _*)
