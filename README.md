@@ -1,10 +1,7 @@
-##Announcement
-
-This plugin is not actively maintained. Please reach me via siasiamail@gmail.com if you'd like to pick it up.
 
 ##Usage
 
-Requires [XSBT](http://github.com/harrah/xsbt).
+Requires [SBT](http://www.scala-sbt.org/).
 
 Maven artifacts are created for 0.11.0 version.
 
@@ -143,3 +140,5 @@ with the distribution terms. See LICENSE for additional information.
 ##Credits
 
 This is a port of [sbt-proguard-plugin](http://github.com/nuttycom/sbt-proguard-plugin) by Kris Nuttycombe.
+
+The author of this port is Artyom Olshevskiy.
