@@ -8,7 +8,7 @@ object ProguardPlugin extends Build {
 	def pomPostProcessTask(node: Node) = node match {
 		case xml: Elem =>
 			val children = Seq(
-				<url>http://github.com/siasia/xsbt-web-plugin</url>,
+				<url>https://github.com/adamw/xsbt-proguard-plugin</url>,
 				<licenses>
 					<license>
 						<name>GPLv2</name>
@@ -17,9 +17,9 @@ object ProguardPlugin extends Build {
 					</license>
 				</licenses>,
 				<scm>
-					<connection>scm:git:git@github.com:siasia/xsbt-proguard-plugin.git</connection>
-					<developerConnection>scm:git:git@github.com:siasia/xsbt-proguard-plugin.git</developerConnection>
-					<url>git@github.com:siasia/xsbt-proguard-plugin.git</url>
+					<connection>scm:git:git@github.com:adamw/xsbt-proguard-plugin.git</connection>
+					<developerConnection>scm:git:git@github.com:adamw/xsbt-proguard-plugin.git</developerConnection>
+					<url>git@github.com:adamw/xsbt-proguard-plugin.git</url>
 				</scm>,
 				<developers>
 					<developer>
@@ -27,6 +27,11 @@ object ProguardPlugin extends Build {
 						<name>Artyom Olshevskiy</name>
 						<email>siasiamail@gmail.com</email>
 					</developer>
+          <developer>
+            <id>adamw</id>
+            <name>Adam Warski</name>
+            <email>adam@warski.org</email>
+          </developer>
 				</developers>,
 				<parent>
 					<groupId>org.sonatype.oss</groupId>
