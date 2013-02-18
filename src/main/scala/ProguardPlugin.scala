@@ -65,7 +65,7 @@ object ProguardPlugin extends Plugin {
 		(proguardLibraryJars, proguardInJarsTask, artifactPath in (Compile, packageBin), makeInJarFilter, minJarPath, proguardDefaultArgs, proguardOptions, packageBin in Compile, streams) map {
 			(plj, pij, jp, mijf, mjp, pda, po, pb, s) =>
 				val proguardInJarsArg = {
-					val inPaths = pij.foldLeft(Map.empty[String, File])((m, p) => m + (p.getName -> p)).values.iterator
+					val inPaths = pij.foldLeft(Map.empty[String, File])((m, p) => m + (p.getAbsolutePath -> p)).values.iterator
 					"-injars" :: (List(jp.escaped).iterator ++ inPaths.map(p => p.escaped+"("+mijf(p.asFile.getName)+")")).mkString(File.pathSeparator) :: Nil
 				}
 			val proguardOutJarsArg = "-outjars" :: mjp.escaped :: Nil
