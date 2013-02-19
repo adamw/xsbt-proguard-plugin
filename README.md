@@ -119,13 +119,13 @@ The argument to `makeJarFilter` will be the filename of the jar file in
 question (minus any path). Note that your project's jar file is always included
 without any filtering.
 
-Other customizations are possible, take a look at the source to [ProguardPlugin](http://github.com/siasia/xsbt-proguard-plugin/blob/master/src/main/scala/ProguardPlugin.scala).
+Other customizations are possible, take a look at the source to [ProguardPlugin](http://github.com/adamw/xsbt-proguard-plugin/blob/master/src/main/scala/ProguardPlugin.scala).
 
 ##Hacking on the plugin
 
-If you need make modifications to the plugin itself, you can compile and install it locally (you need at least xsbt 0.9.x to build it):
+If you need make modifications to the plugin itself, you can compile and install it locally:
 
-    $ git clone git://github.com/siasia/xsbt-proguard-plugin.git
+    $ git clone git://github.com/adamw/xsbt-proguard-plugin.git
     $ cd xsbt-proguard-plugin
     $ xsbt publish-local
 
