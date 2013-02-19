@@ -7,12 +7,9 @@ object ProguardPlugin extends Build {
     scriptedBufferLog := false,
     scriptedLaunchOpts += "-XX:MaxPermSize=128m",
     sbtPlugin := true,
-    projectID <<= (organization,moduleName,version,artifacts,crossPaths){ (org,module,version,as,crossEnabled) =>
-      ModuleID(org, module, version).cross(crossEnabled).artifacts(as : _*)
-    },
     name := "xsbt-proguard-plugin",
     organization := "org.scala-sbt",
-    version <<= sbtVersion(_ + "-0.1.3-SNAPSHOT"),
+    version := "0.1.3-SNAPSHOT",
     libraryDependencies += "net.sf.proguard" % "proguard-base" % "4.8",
     scalacOptions += "-deprecation",
     publishMavenStyle := false,
@@ -24,7 +21,6 @@ object ProguardPlugin extends Build {
         ("sbt-plugin-releases", scalasbt+"sbt-plugin-releases")
       Some(Resolver.url(name, new URL(url))(Resolver.ivyStylePatterns))
     },
-    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
     homepage := Some(new java.net.URL("https://github.com/adamw/xsbt-proguard-plugin")),
     licenses := ("GPLv2", new java.net.URL("http://www.gnu.org/licenses/gpl-2.0.html")) :: Nil,
     scmInfo := Some(ScmInfo(new java.net.URL("https://github.com/adamw/xsbt-proguard-plugin"),
