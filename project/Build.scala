@@ -2,8 +2,6 @@ import sbt._
 import ScriptedPlugin._
 import Keys._
 
-import scala.xml.{Elem, Node}
-
 object ProguardPlugin extends Build {
   def rootSettings: Seq[Setting[_]] = Seq(
     scriptedBufferLog := false,
