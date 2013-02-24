@@ -9,7 +9,7 @@ object ProguardPlugin extends Build {
     sbtPlugin := true,
     name := "xsbt-proguard-plugin",
     organization := "org.scala-sbt",
-    version := "0.1.3-SNAPSHOT",
+    version := "0.1.3",
     libraryDependencies += "net.sf.proguard" % "proguard-base" % "4.8",
     scalacOptions += "-deprecation",
     publishMavenStyle := false,
