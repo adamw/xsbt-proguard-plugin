@@ -7,9 +7,9 @@ Requires [SBT](http://www.scala-sbt.org/).
 
 To `project/plugins.sbt`, add:
 
-    resolvers += Resolver.url("sbt-plugin-snapshots", url("http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots/"))(Resolver.ivyStylePatterns)
+    resolvers += Resolver.url("sbt-plugin-releases-scalasbt", url("http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns)
 
-    addSbtPlugin("org.scala-sbt" % "xsbt-proguard-plugin" % "0.1.3-SNAPSHOT")
+    addSbtPlugin("org.scala-sbt" % "xsbt-proguard-plugin" % "0.1.3")
 
 For SBT 0.11, see below.
 
