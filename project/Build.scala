@@ -16,9 +16,9 @@ object ProguardPlugin extends Build {
     publishTo <<= (version) { version: String =>
       val scalasbt = "http://repo.scala-sbt.org/scalasbt/"
       val (name, url) = if (version.contains("-SNAPSHOT"))
-        ("sbt-plugin-snapshots", scalasbt+"sbt-plugin-snapshots")
+        ("sbt-plugin-snapshots-scalasbt", scalasbt+"sbt-plugin-snapshots")
       else
-        ("sbt-plugin-releases", scalasbt+"sbt-plugin-releases")
+        ("sbt-plugin-releases-scalasbt", scalasbt+"sbt-plugin-releases")
       Some(Resolver.url(name, new URL(url))(Resolver.ivyStylePatterns))
     },
     homepage := Some(new java.net.URL("https://github.com/adamw/xsbt-proguard-plugin")),
